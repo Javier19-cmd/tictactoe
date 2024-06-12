@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import "./TicTacToe.css";
 import circle_icon from "../Assets/circle.png";
 import cross_icon from "../Assets/cross.png";
@@ -6,25 +6,30 @@ import cross_icon from "../Assets/cross.png";
 let data = ["", "", "", "", "", "", "", "", ""];
 
 const TicTacToe = () => {
-  let [count, setCount] = useState(0);
-  let [lock, setLock] = useState(false);
-  let [turn, setTurn] = useState("X");
-  let [scoreX, setScoreX] = useState(0);
-  let [scoreO, setScoreO] = useState(0);
-  let [draws, setDraws] = useState(0);
-  let [gameMode, setGameMode] = useState<"PvP" | "PvC">("PvP");
-  let titleRef = useRef<HTMLHeadingElement | null>(null);
-  let box1 = useRef<HTMLDivElement | null>(null);
-  let box2 = useRef<HTMLDivElement | null>(null);
-  let box3 = useRef<HTMLDivElement | null>(null);
-  let box4 = useRef<HTMLDivElement | null>(null);
-  let box5 = useRef<HTMLDivElement | null>(null);
-  let box6 = useRef<HTMLDivElement | null>(null);
-  let box7 = useRef<HTMLDivElement | null>(null);
-  let box8 = useRef<HTMLDivElement | null>(null);
-  let box9 = useRef<HTMLDivElement | null>(null);
+  const [count, setCount] = useState(0);
+  const [lock, setLock] = useState(false);
+  const [turn, setTurn] = useState<"X" | "O">(() => (Math.random() < 0.5 ? "X" : "O"));
+  const [scoreX, setScoreX] = useState(0);
+  const [scoreO, setScoreO] = useState(0);
+  const [draws, setDraws] = useState(0);
+  const [gameMode, setGameMode] = useState<"PvP" | "PvC">("PvP");
+  const titleRef = useRef<HTMLHeadingElement | null>(null);
+  const box1 = useRef<HTMLDivElement | null>(null);
+  const box2 = useRef<HTMLDivElement | null>(null);
+  const box3 = useRef<HTMLDivElement | null>(null);
+  const box4 = useRef<HTMLDivElement | null>(null);
+  const box5 = useRef<HTMLDivElement | null>(null);
+  const box6 = useRef<HTMLDivElement | null>(null);
+  const box7 = useRef<HTMLDivElement | null>(null);
+  const box8 = useRef<HTMLDivElement | null>(null);
+  const box9 = useRef<HTMLDivElement | null>(null);
 
-  let box_arr = [box1, box2, box3, box4, box5, box6, box7, box8, box9];
+  const box_arr = [box1, box2, box3, box4, box5, box6, box7, box8, box9];
+
+  useEffect(() => {
+    // Randomly set the first turn when the component mounts or resets
+    setTurn(Math.random() < 0.5 ? "X" : "O");
+  }, []);
 
   const toggle = (e: React.MouseEvent<HTMLDivElement>, num: number) => {
     if (lock || data[num] !== "") {
@@ -35,17 +40,15 @@ const TicTacToe = () => {
       e.currentTarget.innerHTML = `<img src=${cross_icon} alt="cross" />`;
       data[num] = "x";
       setTurn("O");
-      setCount(count + 1);
-      checkWin();
-      if (gameMode === "PvC" && !lock) {
-        setTimeout(computerTurn, 500);
-      }
-    } else if (gameMode === "PvP") {
+    } else {
       e.currentTarget.innerHTML = `<img src=${circle_icon} alt="circle" />`;
       data[num] = "o";
       setTurn("X");
-      setCount(count + 1);
-      checkWin();
+    }
+    setCount(count + 1);
+    checkWin();
+    if (gameMode === "PvC" && turn === "X" && !lock) {
+      setTimeout(computerTurn, 500);
     }
   }
 
@@ -54,9 +57,9 @@ const TicTacToe = () => {
       return;
     }
 
-    let availableMoves = data.map((val, index) => (val === "" ? index : -1)).filter(index => index !== -1);
+    const availableMoves = data.map((val, index) => (val === "" ? index : -1)).filter(index => index !== -1);
     if (availableMoves.length > 0) {
-      let move = availableMoves[Math.floor(Math.random() * availableMoves.length)];
+      const move = availableMoves[Math.floor(Math.random() * availableMoves.length)];
       if (box_arr[move].current) {
         box_arr[move]!.current!.innerHTML = `<img src=${circle_icon} alt="circle" />`;
         data[move] = "o";
@@ -79,7 +82,7 @@ const TicTacToe = () => {
       [2, 4, 6]
     ];
 
-    for (let combination of winningCombinations) {
+    for (const combination of winningCombinations) {
       const [a, b, c] = combination;
       if (data[a] && data[a] === data[b] && data[a] === data[c]) {
         won(data[a], combination);
@@ -121,7 +124,7 @@ const TicTacToe = () => {
   const reset = () => {
     data = ["", "", "", "", "", "", "", "", ""];
     setLock(false);
-    setTurn("X");
+    setTurn(Math.random() < 0.5 ? "X" : "O");
     if (titleRef.current) {
       titleRef.current.innerHTML = "Tic Tac Toe Game In <span>React + TSX</span>";
     }
