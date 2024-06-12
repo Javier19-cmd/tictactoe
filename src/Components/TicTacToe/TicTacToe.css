@@ -4,7 +4,7 @@
 
 .title{
     margin-top: 50px;
-    color: white;
+    color: #E0E0E0; /* Gris claro */
     font-size: 60px;
     display: flex;
     justify-content: center;
@@ -12,7 +12,7 @@
 }
 
 .title span{
-    color: #26ffcb;
+    color: #FF6F61; /* Rojo coral */
     padding-left: 15px;
 }
 
@@ -23,9 +23,9 @@
     outline: none;
     cursor: pointer;
     border-radius: 50px;
-    background: #1f3540;
+    background: #2E3A46; /* Gris azulado oscuro */
     font-size: 26px;
-    color: #26ffcb;
+    color: #FF6F61; /* Rojo coral */
     margin-top: 25px;
     margin-bottom: 50px;
 }
@@ -34,8 +34,8 @@
     display: flex;
     height: 180px;
     width: 180px;
-    background: #1f3540;
-    border: 4px solid #0f1b21;
+    background: #2E3A46; /* Gris azulado oscuro */
+    border: 4px solid #1B2834; /* Azul oscuro */
     border-radius: 12px;
     cursor: pointer;
 }
