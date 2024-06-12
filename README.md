@@ -1,7 +1,7 @@
 
 # Tic Tac Toe
 
-![Tic Tac Toe](https://img.shields.io/badge/JavaScript-ES6%20%2B-brightgreen) ![Tic Tac Toe](https://img.shields.io/badge/React-17.0.2-blue) ![Tic Tac Toe](https://img.shields.io/badge/License-MIT-yellow)
+![Tic Tac Toe](https://img.shields.io/badge/JavaScript-ES6%20%2B-brightgreen) ![Tic Tac Toe](https://img.shields.io/badge/React-17.0.2-blue)
 
 ## Descripción
 
