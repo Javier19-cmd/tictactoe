@@ -17,7 +17,7 @@
     padding-left: 15px;
 }
 
-.scores, .turn, .game-mode {
+.scores, .turn, .game-mode, .difficulty {
     color: #E0E0E0; /* Gris claro */
     font-size: 24px;
     margin-top: 20px;
@@ -92,20 +92,20 @@
     }
 }
 
-.game-mode {
+.game-mode, .difficulty {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 20px;
 }
 
-.game-mode label {
+.game-mode label, .difficulty label {
     margin-right: 10px;
     font-size: 24px;
     color: #E0E0E0; /* Gris claro */
 }
 
-.game-mode select {
+.game-mode select, .difficulty select {
     width: 200px;
     height: 40px;
     border: 2px solid #1B2834; /* Azul oscuro */
@@ -118,7 +118,7 @@
     transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-.game-mode select:hover {
+.game-mode select:hover, .difficulty select:hover {
     background: #3C4A57; /* Gris azulado más claro */
     border-color: #FF6F61; /* Rojo coral */
 }
@@ -146,11 +146,11 @@
         gap: 5px;
     }
 
-    .scores, .turn, .game-mode label {
+    .scores, .turn, .game-mode label, .difficulty label {
         font-size: 20px;
     }
 
-    .game-mode select {
+    .game-mode select, .difficulty select {
         width: 180px;
         height: 35px;
         font-size: 16px;
@@ -178,11 +178,11 @@
         gap: 5px;
     }
 
-    .scores, .turn, .game-mode label {
+    .scores, .turn, .game-mode label, .difficulty label {
         font-size: 18px;
     }
 
-    .game-mode select {
+    .game-mode select, .difficulty select {
         width: 150px;
         height: 30px;
         font-size: 14px;

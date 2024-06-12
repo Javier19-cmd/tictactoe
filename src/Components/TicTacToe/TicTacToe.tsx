@@ -13,6 +13,7 @@ const TicTacToe = () => {
   const [scoreO, setScoreO] = useState(0);
   const [draws, setDraws] = useState(0);
   const [gameMode, setGameMode] = useState<"PvP" | "PvC">("PvP");
+  const [difficulty, setDifficulty] = useState<"Easy" | "Medium" | "Hard">("Easy");
   const titleRef = useRef<HTMLHeadingElement | null>(null);
   const box1 = useRef<HTMLDivElement | null>(null);
   const box2 = useRef<HTMLDivElement | null>(null);
@@ -27,7 +28,6 @@ const TicTacToe = () => {
   const box_arr = [box1, box2, box3, box4, box5, box6, box7, box8, box9];
 
   useEffect(() => {
-    // Randomly set the first turn when the component mounts or resets
     setTurn(Math.random() < 0.5 ? "X" : "O");
   }, []);
 
@@ -48,26 +48,43 @@ const TicTacToe = () => {
     setCount(count + 1);
     checkWin();
     if (gameMode === "PvC" && turn === "X" && !lock) {
-      setTimeout(computerTurn, 500);
+      setTimeout(() => computerTurn(difficulty), 500);
     }
   }
 
-  const computerTurn = () => {
+  const computerTurn = (level: "Easy" | "Medium" | "Hard") => {
     if (lock || count >= 9) {
       return;
     }
 
     const availableMoves = data.map((val, index) => (val === "" ? index : -1)).filter(index => index !== -1);
-    if (availableMoves.length > 0) {
-      const move = availableMoves[Math.floor(Math.random() * availableMoves.length)];
-      if (box_arr[move].current) {
-        box_arr[move]!.current!.innerHTML = `<img src=${circle_icon} alt="circle" />`;
-        data[move] = "o";
-        setTurn("X");
-        setCount(count + 1);
-        checkWin();
-      }
+    
+    let move: number | undefined;
+    if (level === "Easy") {
+      move = availableMoves[Math.floor(Math.random() * availableMoves.length)];
+    } else if (level === "Medium") {
+      move = findBestMoveMedium();
+    } else {
+      move = findBestMoveHard();
     }
+
+    if (move !== undefined && box_arr[move].current) {
+      box_arr[move]!.current!.innerHTML = `<img src=${circle_icon} alt="circle" />`;
+      data[move] = "o";
+      setTurn("X");
+      setCount(count + 1);
+      checkWin();
+    }
+  }
+
+  const findBestMoveMedium = () => {
+    const availableMoves = data.map((val, index) => (val === "" ? index : -1)).filter(index => index !== -1);
+    return availableMoves[Math.floor(Math.random() * availableMoves.length)];
+  }
+
+  const findBestMoveHard = () => {
+    const availableMoves = data.map((val, index) => (val === "" ? index : -1)).filter(index => index !== -1);
+    return availableMoves[Math.floor(Math.random() * availableMoves.length)];
   }
 
   const checkWin = () => {
@@ -153,6 +170,16 @@ const TicTacToe = () => {
           <option value="PvC">Player vs Computer</option>
         </select>
       </div>
+      {gameMode === "PvC" && (
+        <div className="difficulty">
+          <label htmlFor="difficulty">Difficulty:</label>
+          <select id="difficulty" value={difficulty} onChange={(e) => setDifficulty(e.target.value as "Easy" | "Medium" | "Hard")}>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
+        </div>
+      )}
       <div className="board">
         <div className="boxes" ref={box1} onClick={(e) => {toggle(e, 0)}}></div>
         <div className="boxes" ref={box2} onClick={(e) => {toggle(e, 1)}}></div>
