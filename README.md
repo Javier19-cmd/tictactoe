@@ -68,10 +68,6 @@ La aplicación debería estar disponible en `http://localhost:3000`.
 4. Envía tus cambios a tu repositorio fork (`git push origin feature/nueva-caracteristica`).
 5. Abre un Pull Request en este repositorio original.
 
-## Licencia
-
-Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
-
 ## Contacto
 
 Para cualquier duda o sugerencia, por favor contacta a Javier a través de [GitHub](https://github.com/Javier19-cmd).
